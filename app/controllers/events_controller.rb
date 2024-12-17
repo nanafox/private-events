@@ -34,21 +34,25 @@ class EventsController < ApplicationController
     @events = Event.includes(:creator).where(creator: @creator).load
   end
 
+  # GET /events/:id
   def show
   end
 
+  # GET /events/:id/edit
   def edit
   end
 
+  # PATCH | PUT /events/:id
   def update
     if @event.update(event_params)
-      redirect_to current_user_events_path,
+      redirect_to event_path(@event),
         notice: "Event updated successfully"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
+  # DELETE /events/:id
   def destroy
     if @event.destroy
       redirect_to current_user_events_path, notice: "Event deleted successfully"
