@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   has_many :events, inverse_of: "creator", dependent: :delete_all
 
+  # Events that this user has attended
+  has_many :attendances
+  has_many :attended_events, through: :attendances
+
   def to_param
     username
   end
