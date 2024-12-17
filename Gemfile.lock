@@ -88,6 +88,9 @@ GEM
     brakeman (6.2.2)
       racc
     builder (3.3.0)
+    bullet (8.0.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     capybara (3.40.0)
       addressable
       matrix
@@ -253,7 +256,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.9)
+    rexml (3.4.0)
     rubocop (1.69.2)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -350,6 +353,7 @@ GEM
     unicode-display_width (3.1.2)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
+    uniform_notifier (1.16.0)
     uri (1.0.2)
     useragent (0.16.11)
     warden (1.2.9)
@@ -386,6 +390,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
+  bullet (~> 8.0)
   capybara
   debug
   devise (~> 4.9)
@@ -394,7 +399,7 @@ DEPENDENCIES
   kamal
   propshaft
   puma (>= 5.0)
-  rails (~> 8.0.0, >= 8.0.0.1)
+  rails (>= 8.0.0.1)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable
