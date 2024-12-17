@@ -1,0 +1,32 @@
+<article
+  class="
+    bg-white shadow-md rounded-lg p-8 hover:animate-pulse md:content-center
+    md:justify-center
+  "
+>
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl font-semibold"><%= event.title %></h2>
+    <div class="flex justify-between gap-4">
+      <% if request.path != event_path(event) %>
+        <%= link_to "View", event_path(event), class: "text-sm font-semibold" %>
+      <% end %>
+      <% if current_user == event.creator %>
+        <%= link_to "Edit", edit_event_path(event), class: "text-sm font-semibold" %>
+        <%= link_to "Delete",
+        event_path(event),
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure",
+        },
+        class: "text-sm font-semibold hover:text-red-500" %>
+      <% end %>
+    </div>
+  </div>
+  <p><%= event.description %></p>
+  <p><%= event.date %></p>
+  <p><%= event.location %></p>
+  <p>Organized by:
+    <%= link_to event.creator.fullname,
+    user_events_path(event.creator),
+    class: "text-orange-800 hover:underline font-semibold" %></p>
+</article>

@@ -1,0 +1,9 @@
+<h2 class="text-xl font-semibold">My Events</h2>
+
+<% if @events.size.zero? %>
+  <p class="text-xl text-center text-rose-900 font-semibold align-middle">No events found</p>
+<% else %>
+  <section id="events" class="grid lg:grid-cols-4 md:grid-cols-1 gap-2 md:gap-2 lg:gap-4 mt-4">
+    <%= render @events %>
+  </section>
+<% end %>
