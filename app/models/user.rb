@@ -16,4 +16,10 @@ class User < ApplicationRecord
     "#{fullname}(@#{username})"
   end
 
+  # Checks if the current user is the owner of the specified event.
+  #
+  # Owners are those who created the event.
+  def owns_event?(event)
+    event.creator == self
+  end
 end
