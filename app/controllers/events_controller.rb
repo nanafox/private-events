@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
   before_action :set_creator, only: [ :user_events ]
   before_action :set_event, only: [ :show, :edit, :update, :destroy ]
-
   before_action :authenticate_user!, except: [ :index ]
+  before_action :validate_user, only: [ :edit, :update, :destroy ]
 
   # GET /events or GET /
   def index
@@ -82,6 +82,12 @@ class EventsController < ApplicationController
     @event = Event.find_by(id: params.expect(:id))
     unless @event
       redirect_to root_path, status: :see_other, alert: "Event not found!"
+    end
+  end
+
+  def validate_user
+    unless current_user.owns_event?(@event)
+      redirect_to root_path, alert: "You are not authorized to perform this action"
     end
   end
 end
