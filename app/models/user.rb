@@ -11,4 +11,9 @@ class User < ApplicationRecord
   def to_param
     username
   end
+
+  def fullname_with_username
+    "#{fullname}(@#{username})"
+  end
+
 end

@@ -70,7 +70,7 @@
             <%= @event.title %>
           </h1>
           <p class="mt-4 text-gray-600 hover:underline">
-            <%= link_to "#{@event.creator.fullname} (@#{@event.creator.username})",
+            <%= link_to @event.creator.fullname_with_username,
             user_events_path(@event.creator) %>
           </p>
         </div>
