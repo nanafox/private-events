@@ -19,7 +19,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   <<: *default
   database: private_events_development
@@ -81,9 +80,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: private_events_production
-    username: private_events
-    password: <%= ENV["PRIVATE_EVENTS_DATABASE_PASSWORD"] %>
+    url: <%= ENV["DATABASE_URL"] %>
   cache:
     <<: *primary_production
     database: private_events_production_cache
