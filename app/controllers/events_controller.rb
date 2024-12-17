@@ -79,7 +79,7 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find_by(id: params.expect(:id))
     unless @event
-      redirect_to root_path, status: see_other, alert: "Event not found!"
+      redirect_to root_path, status: :see_other, alert: "Event not found!"
     end
   end
 end
