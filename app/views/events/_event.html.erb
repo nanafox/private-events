@@ -10,7 +10,7 @@
       <% if request.path != event_path(event) %>
         <%= link_to "View", event_path(event), class: "text-sm font-semibold" %>
       <% end %>
-      <% if current_user == event.creator %>
+      <% if current_user.owns_event?(event) %>
         <%= link_to "Edit", edit_event_path(event), class: "text-sm font-semibold" %>
         <%= link_to "Delete",
         event_path(event),
