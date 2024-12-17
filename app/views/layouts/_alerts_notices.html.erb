@@ -1,0 +1,15 @@
+<%# Alerts and notices %>
+<% if notice %>
+  <div
+    class="
+      mb-4 rounded-md bg-green-100 p-4 text-green-700 border border-green-200
+    "
+  >
+    <%= notice %>
+  </div>
+<% end %>
+<% if alert %>
+  <div class="mb-4 rounded-md bg-red-100 p-4 text-red-700 border border-red-200">
+    <%= alert %>
+  </div>
+<% end %>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
   <head>
     <title><%= content_for(:title) || "EventLoop | Your one true place for events around you." %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,34 +8,156 @@
     <meta name="author" content="Maxwell Nana Forson">
     <meta
       name="description"
-      content="EventLoop is a one place for you to find events happening around you. Feel free explore the site for events and try joining some of the them to get some social life."
+      content="EventLoop is your go-to platform for discovering and joining events around you. Explore, connect, and build a social life with EventLoop."
     >
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :all, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "mobile_ui", "data-turbo-track": "reload", defer: true %>
   </head>
-  <body class="h-full flex flex-col">
-    <!-- Header section -->
-    <header></header>
-    <!-- Main section -->
-    <main class="container mx-auto mt-28 px-5">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </main>
-    <!-- Footer section -->
-    <footer class="mt-auto mx-auto">
-      <div>
-      </div>
+  <body class="min-h-full flex flex-col min-w-full">
+    <!-- Header Section -->
+    <div class="bg-white">
+      <%= render "layouts/bg-1" %>
+      <header class="absolute inset-x-0 top-0 z-50 w-full">
+        <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <!-- Logo -->
+          <div class="flex lg:flex-1">
+            <a href="<%= root_path %>" class="-m-1.5 p-1.5">
+              <span class="sr-only">EventLoop</span>
+              <h1 class=" text-2xl font-bold underline text-gray-700 ">
+                eventloop
+              </h1>
+            </a>
+          </div>
+          <!-- Mobile Menu Button -->
+          <div class="flex lg:hidden">
+            <button
+              type="button"
+              id="open-menu"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              class="
+                -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700
+              "
+            >
+              <span class="sr-only">Open main menu</span>
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </button>
+          </div>
+          <!-- Desktop Navigation -->
+          <div class="hidden lg:flex lg:gap-x-12">
+            <%= render "layouts/navbar_links", device: "desktop" %>
+          </div>
+          <!-- User Actions -->
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <% if user_signed_in? %>
+              <%= button_to "Log out",
+              destroy_user_session_path,
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure you want to log out?",
+                confirm: "Are you sure you want to log out?",
+              },
+              method: :delete,
+              class: "text-sm font-semibold text-gray-900" %>
+            <% else %>
+              <%= link_to "Log in",
+              new_user_session_path,
+              class: "text-sm font-semibold text-gray-900" %>
+            <% end %>
+            <span aria-hidden="true">&rarr;</span>
+          </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="hidden lg:hidden" id="mobile-menu" role="dialog" aria-modal="true">
+          <div class="fixed inset-0 z-50 bg-black bg-opacity-25"></div>
+          <div class="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white px-6 py-6">
+            <div class="flex items-center justify-between">
+              <a href="#" class="-m-1.5 p-1.5">
+                <h1 class="text-2xl font-bold text-gray-900">eventloop</h1>
+              </a>
+              <button
+                type="button"
+                class="-m-2.5 rounded-md p-2.5 text-gray-700"
+                aria-label="Close menu"
+                id="close-menu"
+              >
+                <span class="sr-only">Close menu</span>
+                <svg
+                  class="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div class="mt-6">
+              <div class="space-y-2">
+                <%= render "layouts/navbar_links", device: "mobile" %>
+              </div>
+
+              <div class="mt-6">
+                <% if user_signed_in? %>
+                  <%= button_to "Log out",
+                  destroy_user_session_path,
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure you want to log out?",
+                    confirm: "Are you sure you want to log out?",
+                  },
+                  method: :delete,
+                  class: "block px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50" %>
+                <% else %>
+                  <%= link_to "Log in",
+                  new_user_session_path,
+                  class: "block px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Missing closing div here -->
+      </header>
+    </div>
+    <% if user_signed_in? || request.path != root_path %>
+      <!-- Main section -->
+      <main class="container mx-auto mt-28 px-5">
+        <%= render "layouts/alerts_notices" %>
+        <%= yield %>
+      </main>
+    <% else %>
+      <main class="container mx-auto mt-28 px-5">
+        <%= render "layouts/alerts_notices" %>
+        <%= render "layouts/landing_page" %>
+      </main>
+    <% end %>
+    <%= render "layouts/bg-2" %>
+    <!-- Footer -->
+    <footer id="footer" class="min-w-full md:min-w-full">
+      <%= render "layouts/footer" %>
     </footer>
   </body>
 </html>

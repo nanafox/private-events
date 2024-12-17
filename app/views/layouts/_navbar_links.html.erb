@@ -1,0 +1,22 @@
+<%# navbar links %>
+<a
+  href="https://github.com/nanafox/private-events"
+  target="_blank"
+  class="<%= navbar_classes_for(device_type: device) %>"
+>Source Code</a>
+<% unless user_signed_in? %>
+  <a
+    href="<%= root_path %>#features"
+    class="<%= navbar_classes_for(device_type: device) %>"
+  >Features</a>
+<% end %>
+<% if user_signed_in? %>
+  <%= link_to "My Events",
+  current_user_events_path,
+  class: navbar_classes_for(device_type: device) %>
+  <%= link_to "Create Event",
+  new_event_path,
+  class: navbar_classes_for(device_type: device) %>
+<% end %>
+<a href="#" class="<%= navbar_classes_for(device_type: device) %>">FAQs</a>
+<a href="#" class="<%= navbar_classes_for(device_type: device) %>">Contact</a>
