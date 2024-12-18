@@ -72,6 +72,12 @@ class EventsController < ApplicationController
     unless @creator
       redirect_to root_path, status: :see_other, alert: "User not found!"
     end
+
+    # if the user is the same as the creator, redirect them to their customized
+    # page for listing events and attended events.
+    if @creator == current_user
+      redirect_to current_user_events_path, status: :see_other
+    end
   end
 
   def event_params
@@ -85,9 +91,11 @@ class EventsController < ApplicationController
     end
   end
 
+  # Validate that the user is authorized to perform the destructive action.
   def validate_user
     unless current_user.owns_event?(@event)
-      redirect_to root_path, alert: "You are not authorized to perform this action"
+      redirect_to root_path,
+        alert: "You are not authorized to perform this action"
     end
   end
 end
