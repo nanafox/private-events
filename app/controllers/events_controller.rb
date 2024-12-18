@@ -1,12 +1,26 @@
 class EventsController < ApplicationController
-  before_action :set_creator, only: [ :user_events ]
-  before_action :set_event, only: [ :show, :edit, :update, :destroy ]
-  before_action :authenticate_user!, except: [ :index ]
-  before_action :validate_user, only: [ :edit, :update, :destroy ]
+  before_action :set_creator, only: [:user_events]
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index]
+  before_action :validate_user, only: [:edit, :update, :destroy]
 
   # GET /events or GET /
   def index
-    @events = Event.includes(:creator).load
+    @events_type = "upcoming"
+
+    # Fetch and normalize parameters
+    old_events = params[:old_events] == "true"
+    all_events = params[:all_events] == "true"
+
+    if old_events
+      @events = Event.past
+      @events_type = "past"
+    elsif all_events
+      @events = Event.order(date: :desc).includes(:creator).load
+      @events_type = "all"
+    else
+      @events = Event.upcoming
+    end
   end
 
   # GET /events/new
@@ -81,7 +95,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.expect(event: [ :title, :location, :description, :date ])
+    params.expect(event: [:title, :location, :description, :date])
   end
 
   def set_event
@@ -98,4 +112,8 @@ class EventsController < ApplicationController
         alert: "You are not authorized to perform this action"
     end
   end
+
+  # def allow_filter
+  #   params.permit(:all_events, :old_events)
+  # end
 end

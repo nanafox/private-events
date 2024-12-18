@@ -6,4 +6,12 @@ class Event < ApplicationRecord
   has_many :attendees, through: :attendances
 
   validates :title, :location, :description, :date, presence: true
+
+  def self.past
+    includes(:creator).where("date < ?", DateTime.now).order(date: :desc).load
+  end
+
+  def self.upcoming
+    includes(:creator).where("date >= ?", DateTime.now).order(date: :desc).load
+  end
 end

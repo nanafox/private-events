@@ -1,5 +1,16 @@
 <%# Index page for events %>
-<h1 class="text-2xl font-bold">Events</h1>
+<%= button_to "Create Event",
+new_event_path, method: :get,
+class: "rounded-lg shadow-md p-2 bg-indigo-700 hover:animate-pulse text-white mb-4" %>
+<h1 class="text-2xl font-bold">
+  <% if @events_type == "past" %>
+    Past Events
+  <% elsif @events_type == "all" %>
+    Past & Upcoming Events
+  <% else %>
+    Upcoming Events
+  <% end %>
+</h1>
 <section
   id="events"
   class="mt-4 grid lg:grid-cols-4 md:grid-cols-1 gap-2 md:gap-2 lg:gap-4"
