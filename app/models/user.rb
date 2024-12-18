@@ -32,7 +32,7 @@ class User < ApplicationRecord
     attended_events.include?(event)
   end
 
-  # Returns a the fullname of the user.
+  # Returns the full name of the user.
   def name
     fullname
   end
