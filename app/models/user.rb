@@ -26,4 +26,14 @@ class User < ApplicationRecord
   def owns_event?(event)
     event.creator == self
   end
+
+  # Checks whether a user is attending or attended the provided event.
+  def attending?(event)
+    attended_events.include?(event)
+  end
+
+  # Returns a the fullname of the user.
+  def name
+    fullname
+  end
 end
