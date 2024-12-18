@@ -1,0 +1,15 @@
+<%= turbo_stream.append "attendees",
+                    tag.li(
+                      link_to(
+                        current_user.fullname_with_username,
+                        user_events_path(current_user),
+                        class: "hover:underline",
+                      ),
+                      id: dom_id(current_user),
+                      class: "pl-4 font-semibold text-gray-800 list-disc",
+                    ) %>
+<%= turbo_stream.replace "attend-button",
+                     partial: "events/leave_button",
+                     locals: {
+                       event: @event,
+                     } %>

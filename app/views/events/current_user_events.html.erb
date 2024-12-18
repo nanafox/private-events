@@ -1,9 +1,51 @@
-<h2 class="text-xl font-semibold">My Events</h2>
-
-<% if @events.size.zero? %>
-  <p class="text-xl text-center text-rose-900 font-semibold align-middle">No events found</p>
-<% else %>
-  <section id="events" class="grid lg:grid-cols-4 md:grid-cols-1 gap-2 md:gap-2 lg:gap-4 mt-4">
-    <%= render @events %>
-  </section>
-<% end %>
+<div
+  class="
+    grid lg:grid-cols-2 md:grid-cols-1 gap-4 md:gap-4 lg:gap-8 mt-4 justify-between
+  "
+  id="own-events-and-attended-events"
+>
+  <div id="user-events" class="border-r-2 border-gray-900 pr-4">
+    <h2 class="text-xl font-semibold underline">My Events</h2>
+    <% if @events.size.zero? %>
+      <p class="text-xl text-rose-900 font-semibold align-middle">No events found</p>
+    <% else %>
+      <section
+        class="
+          events grid lg:grid-cols-2 md:grid-cols-1 gap-2 md:gap-2 lg:gap-4 mt-4
+        "
+      >
+        <%= render @events %>
+      </section>
+    <% end %>
+  </div>
+  <div id="user-event-attendances" class="flex flex-col">
+    <div id="upcoming-events">
+      <h2 class="text-xl font-semibold underline">Upcoming events to attend</h2>
+      <section
+        class="
+          events grid lg:grid-cols-2 md:grid-cols-1 gap-2 md:gap-2 lg:gap-4 mt-4
+        "
+      >
+        <% current_user.attended_events.includes(:creator).load.each do |event| %>
+          <% if event.date > DateTime.now %>
+            <%= render event %>
+          <% end %>
+        <% end %>
+      </section>
+    </div>
+    <div id="attended-events" class="mt-4">
+      <h2 class="text-xl font-semibold underline">Attended Events</h2>
+      <section
+        class="
+          events grid lg:grid-cols-2 md:grid-cols-1 gap-2 md:gap-2 lg:gap-4 mt-4
+        "
+      >
+        <% current_user.attended_events.includes(:creator).load.each do |event| %>
+          <% if event.date < DateTime.now %>
+            <%= render event %>
+          <% end %>
+        <% end %>
+      </section>
+    </div>
+  </div>
+</div>

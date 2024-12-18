@@ -72,14 +72,24 @@
               <% if current_user.owns_event?(@event) %>
                 <%= link_to "Edit",
                 edit_event_path(@event),
-                class: "font-semibold text-sm hover:underline text-indigo-600" %>
+                class:
+                  "font-semibold bg-indigo-700 text-sm shadown-md rounded-lg px-4 py-2 hover:bg-indigo-900  focus:online-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-white" %>
                 <%= link_to "Delete",
                 event_path(@event),
                 data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure you want to delete this event?",
                 },
-                class: "font-semibold text-sm hover:underline text-red-600" %>
+                class:
+                  "font-semibold bg-red-700 text-sm shadown-md rounded-lg px-4 py-2 hover:bg-red-900  focus:online-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-white" %>
+              <% else %>
+                <turbo-frame id="attend-button">
+                  <% if current_user.attending?(@event) %>
+                    <%= render "events/leave_button", event: @event %>
+                  <% else %>
+                    <%= render "events/attend_button", event: @event %>
+                  <% end %>
+                </turbo-frame>
               <% end %>
             </div>
           </div>
@@ -175,6 +185,23 @@
           </ul>
           <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">About this event</h2>
           <p class="mt-6"><%= @event.description.presence || "No description provided." %></p>
+          <h2 class="mt-16 mb-4 text-2xl font-bold tracking-tight text-gray-900">List of attendees</h2>
+          <ul id="attendees">
+            <% if @event.attendees.any? %>
+              <% @event.attendees.each do |attendee| %>
+                <li
+                  id="<%= dom_id(attendee) %>"
+                  class="
+                    pl-4 font-semibold text-gray-800 list-disc hover:underline
+                  "
+                >
+                  <%= link_to attendee.fullname_with_username, user_events_path(attendee) %>
+                </li>
+              <% end %>
+            <% else %>
+              <li class="pl-4 font-semibold text-gray-500">No attendees</li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>

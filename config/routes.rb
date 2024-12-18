@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   get "events/creator/me", to: "events#current_user_events", as: :current_user_events
   get "events/creator/:username", to: "events#user_events", as: :user_events
-  resources :events, only: %i[index new create show edit update destroy]
+  resources :events, only: %i[index new create show edit update destroy] do
+    resources :attendances, only: %i[create destroy]
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

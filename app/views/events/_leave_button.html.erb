@@ -1,0 +1,14 @@
+<%= link_to "Leave Event",
+  event_attendance_path(
+    event,
+    current_user.attendances.find_by(event_id: event.id),
+  ),
+  data: {
+    turbo_method: :delete,
+  },
+  class:
+  "
+              font-semibold bg-red-700 text-sm shadow-md rounded-lg px-4 py-2
+              hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-blue-400
+              focus:ring-opacity-75 text-white
+  " %>

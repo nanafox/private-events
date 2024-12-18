@@ -1,0 +1,7 @@
+<%= turbo_stream.remove dom_id(current_user) %>
+
+<%= turbo_stream.replace "attend-button",
+                     partial: "events/attend_button",
+                     locals: {
+                       event: @event,
+                     } %>
