@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
-  before_action :set_creator, only: [:user_events]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index]
-  before_action :validate_user, only: [:edit, :update, :destroy]
+  before_action :set_creator, only: [ :user_events ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!, except: [ :index ]
+  before_action :validate_user, only: [ :edit, :update, :destroy ]
 
   # GET /events or GET /
   def index
@@ -95,7 +95,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.expect(event: [:title, :location, :description, :date])
+    params.expect(event: [ :title, :location, :description, :date ])
   end
 
   def set_event
