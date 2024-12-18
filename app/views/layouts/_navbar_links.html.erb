@@ -17,6 +17,15 @@
   <%= link_to "Create Event",
   new_event_path,
   class: navbar_classes_for(device_type: device) %>
+  <%= link_to "View Past Events",
+  root_path(old_events: true),
+  class: navbar_classes_for(device_type: device) %>
+  <%= link_to "View All Events",
+  root_path(all_events: true),
+  class: navbar_classes_for(device_type: device) %>
+  <%= link_to "View Upcoming Events",
+  root_path,
+  class: navbar_classes_for(device_type: device) %>
 <% end %>
 <a href="#" class="<%= navbar_classes_for(device_type: device) %>">FAQs</a>
 <a href="#" class="<%= navbar_classes_for(device_type: device) %>">Contact</a>
