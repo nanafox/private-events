@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
-ruby "3.3.5"
+# Dynamically work out the Ruby version in use.
+ruby File.read(".ruby-version").split("-").last.strip
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", ">= 8.0.0.1"
@@ -58,6 +59,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "bullet", "~> 8.0"
 end
 
 group :test do
@@ -67,5 +69,3 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
-
-gem "bullet", "~> 8.0"
