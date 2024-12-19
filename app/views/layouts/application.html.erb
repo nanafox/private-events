@@ -79,6 +79,7 @@
                 turbo_method: :delete,
                 turbo_confirm: "Are you sure you want to log out?",
               },
+              method: :delete,
               class: "text-sm font-semibold text-gray-900" %>
             <% else %>
               <%= link_to "Log in",
@@ -126,6 +127,7 @@
                     turbo_method: :delete,
                     turbo_confirm: "Are you sure you want to log out?",
                   },
+                  method: :delete,
                   class: "block px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50" %>
                 <% else %>
                   <%= link_to "Log in",
