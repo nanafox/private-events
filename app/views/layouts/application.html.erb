@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= content_for(:title) || "EventLoop | Your one true place for events around you." %></title>
+    <title>
+      <%= content_for(:title) || "EventLoop | Your one true place for events around you." %>
+    </title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -91,9 +93,9 @@
           <div class="fixed inset-0 z-50 bg-black bg-opacity-25"></div>
           <div class="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white px-6 py-6">
             <div class="flex items-center justify-between">
-              <a href="#" class="-m-1.5 p-1.5">
+              <%= link_to root_path, class: "-m-1.5 p-1.5" do %>
                 <h1 class="text-2xl font-bold text-gray-900">eventloop</h1>
-              </a>
+              <% end %>
               <button
                 type="button"
                 class="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -136,16 +138,16 @@
         </div>
       </header>
     </div>
-      <main class="container mx-auto mt-28 px-5">
-    <% if user_signed_in? || request.path != root_path %>
-      <!-- Main section -->
+    <main class="container mx-auto mt-28 px-5">
+      <% if user_signed_in? || request.path != root_path %>
+        <!-- Main section -->
         <%= render "layouts/alerts_notices" %>
         <%= yield %>
-    <% else %>
+      <% else %>
         <%= render "layouts/alerts_notices" %>
         <%= render "layouts/landing_page" %>
-    <% end %>
-      </main>
+      <% end %>
+    </main>
     <%= render "layouts/bg-2" %>
     <!-- Footer -->
     <footer id="footer" class="min-w-full md:min-w-full">
