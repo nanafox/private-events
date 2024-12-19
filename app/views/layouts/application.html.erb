@@ -21,7 +21,6 @@
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "mobile_ui", "data-turbo-track": "reload", defer: true %>
   </head>
-
   <body class="min-h-full flex flex-col min-w-full">
     <!-- Header Section -->
     <div class="bg-white">
@@ -30,7 +29,7 @@
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <!-- Logo -->
           <div class="flex lg:flex-1">
-            <%= link_to root_path, class: "-m-1.5 p-1.5 text-2xl font-bold underline hover:animate-pulse text-gray-900 ease-in" do %>
+            <%= link_to root_path, class: "-m-1.5 p-1.5 text-2xl font-bold underline text-gray-700 hover:text-indigo-900 hover:no-underline" do %>
               <span class="sr-only">EventLoop</span>
               <h1>
                 eventloop
@@ -77,9 +76,7 @@
               data: {
                 turbo_method: :delete,
                 turbo_confirm: "Are you sure you want to log out?",
-                confirm: "Are you sure you want to log out?",
               },
-              method: :delete,
               class: "text-sm font-semibold text-gray-900" %>
             <% else %>
               <%= link_to "Log in",
@@ -119,7 +116,6 @@
               <div class="space-y-2">
                 <%= render "layouts/navbar_links", device: "mobile" %>
               </div>
-
               <div class="mt-6">
                 <% if user_signed_in? %>
                   <%= button_to "Log out",
@@ -127,9 +123,7 @@
                   data: {
                     turbo_method: :delete,
                     turbo_confirm: "Are you sure you want to log out?",
-                    confirm: "Are you sure you want to log out?",
                   },
-                  method: :delete,
                   class: "block px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50" %>
                 <% else %>
                   <%= link_to "Log in",
@@ -140,21 +134,18 @@
             </div>
           </div>
         </div>
-        <!-- Missing closing div here -->
       </header>
     </div>
+      <main class="container mx-auto mt-28 px-5">
     <% if user_signed_in? || request.path != root_path %>
       <!-- Main section -->
-      <main class="container mx-auto mt-28 px-5">
         <%= render "layouts/alerts_notices" %>
         <%= yield %>
-      </main>
     <% else %>
-      <main class="container mx-auto mt-28 px-5">
         <%= render "layouts/alerts_notices" %>
         <%= render "layouts/landing_page" %>
-      </main>
     <% end %>
+      </main>
     <%= render "layouts/bg-2" %>
     <!-- Footer -->
     <footer id="footer" class="min-w-full md:min-w-full">
