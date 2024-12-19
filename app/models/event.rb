@@ -7,11 +7,15 @@ class Event < ApplicationRecord
 
   validates :title, :location, :description, :date, presence: true
 
-  def self.past
-    includes(:creator).where("date < ?", DateTime.now).order(date: :desc).load
-  end
+  # past events
+  scope :past, -> {
+      includes(:creator)
+        .where("date < ?", DateTime.now).order(date: :desc).load
+    }
 
-  def self.upcoming
-    includes(:creator).where("date >= ?", DateTime.now).order(date: :desc).load
-  end
+  # upcoming events
+  scope :upcoming, -> {
+      includes(:creator)
+        .where("date > ?", DateTime.now).order(date: :desc).load
+    }
 end
