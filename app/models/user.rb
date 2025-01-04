@@ -2,14 +2,15 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+    :recoverable, :rememberable, :validatable,
+    :omniauthable, omniauth_providers: %i[github]
 
   validates :fullname, :username, presence: true
 
   has_many :events, inverse_of: "creator", dependent: :delete_all
 
   # Events that this user has attended
-  has_many :attendances
+  has_many :attendances, dependent: :delete_all
   has_many :attended_events, through: :attendances
 
   def to_param
@@ -35,5 +36,14 @@ class User < ApplicationRecord
   # Returns the full name of the user.
   def name
     fullname
+  end
+
+  def self.from_omniauth(auth)
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.fullname = auth.info.name
+      user.username = auth.info.nickname
+      user.password = Devise.friendly_token[0, 20]
+    end
   end
 end

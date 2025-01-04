@@ -71,3 +71,7 @@ end
 gem "devise", "~> 4.9"
 
 gem "redis", "~> 5.3"
+
+gem "omniauth-github"
+gem "omniauth-rails_csrf_protection"
+gem "activerecord-session_store"

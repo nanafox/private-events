@@ -7,7 +7,8 @@ Rails.application.routes.draw do
                unlock: "unblock", sign_up: "register"
              },
              controllers: {
-               registrations: "users/registrations", sessions: "users/sessions"
+               registrations: "users/registrations", sessions: "users/sessions",
+               omniauth_callbacks: "users/omniauth_callbacks"
              }
 
   get "events/creator/me", to: "events#current_user_events", as: :current_user_events
