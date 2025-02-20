@@ -70,7 +70,7 @@ end
 
 gem "devise", "~> 4.9"
 
-gem "redis", "~> 5.3"
+gem "redis", "~> 5.4"
 
 gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
